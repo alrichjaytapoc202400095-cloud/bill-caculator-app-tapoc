@@ -1,22 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
-<<<<<<< HEAD
 
-=======
->>>>>>> a8372d3560c6519a17553ff312213ca603b6bf8c
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" type="text/css" href="css/style.css" />
     <title>Electric Calculator - Dashboard</title>
-<<<<<<< HEAD
 
-</head>
-
-=======
-    
-</head>
->>>>>>> a8372d3560c6519a17553ff312213ca603b6bf8c
 <body>
 
     <!-- Sidebar -->
@@ -32,11 +22,7 @@
 
     <!-- Main Content -->
     <div class="main-content">
-<<<<<<< HEAD
 
-=======
-        
->>>>>>> a8372d3560c6519a17553ff312213ca603b6bf8c
         <!-- Header -->
         <div class="header-top">
             <div class="breadcrumb">Dashboard</div>
@@ -83,11 +69,7 @@
         <!-- Recent Results Preview -->
         <div class="recent-section">
             <h3>Recent Results Preview (Last 3 Entries)</h3>
-<<<<<<< HEAD
 
-=======
-            
->>>>>>> a8372d3560c6519a17553ff312213ca603b6bf8c
             <div class="recent-list" id="recent-list-container">
                 <!-- Items injected via JS -->
                 <div style="text-align:center; font-size:12px; color:#777;">Loading data...</div>
@@ -118,11 +100,7 @@
                     .select('full_name')
                     .eq('id', session.user.id)
                     .single();
-<<<<<<< HEAD
 
-=======
-                
->>>>>>> a8372d3560c6519a17553ff312213ca603b6bf8c
                 if (profile && profile.full_name) {
                     document.getElementById("header-greeting").textContent = "Welcome back, " + profile.full_name;
                 }
@@ -144,21 +122,13 @@
                 if (error) throw error;
 
                 if (!data || data.length === 0) {
-<<<<<<< HEAD
-                    document.getElementById('recent-list-container').innerHTML =
-=======
-                    document.getElementById('recent-list-container').innerHTML = 
->>>>>>> a8372d3560c6519a17553ff312213ca603b6bf8c
+
                         '<div style="text-align:center; font-size:12px; color:#777;">No calculations yet.</div>';
                     return;
                 }
 
                 // --- Calculate Stats ---
-<<<<<<< HEAD
 
-=======
-                
->>>>>>> a8372d3560c6519a17553ff312213ca603b6bf8c
                 // 1. This Month (Most recent entry)
                 const thisMonthVal = parseFloat(data[0].total_amount) || 0;
                 document.getElementById('stat-this-month').textContent = formatCurrency(thisMonthVal);
@@ -186,19 +156,7 @@
                 recentItems.forEach(item => {
                     const div = document.createElement('div');
                     div.className = 'recent-item';
-<<<<<<< HEAD
 
-                    // Format: Month Year (assuming month is stored as text like "January")
-                    // We'll just use the stored month + current year for display if year isn't stored
-                    const displayMonth = item.month || "Unknown";
-                    const displayYear = new Date(item.created_at).getFullYear();
-=======
-                    
-                    // Format: Month Year (assuming month is stored as text like "January")
-                    // We'll just use the stored month + current year for display if year isn't stored
-                    const displayMonth = item.month || "Unknown";
-                    const displayYear = new Date(item.created_at).getFullYear(); 
->>>>>>> a8372d3560c6519a17553ff312213ca603b6bf8c
 
                     div.innerHTML = `
                         <div class="recent-info">
@@ -220,8 +178,5 @@
         }
     </script>
 </body>
-<<<<<<< HEAD
 
-=======
->>>>>>> a8372d3560c6519a17553ff312213ca603b6bf8c
 </html>

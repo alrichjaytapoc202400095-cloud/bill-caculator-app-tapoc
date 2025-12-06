@@ -1,22 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
-<<<<<<< HEAD
 
-=======
->>>>>>> a8372d3560c6519a17553ff312213ca603b6bf8c
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" type="text/css" href="css/style.css" />
     <title>Electric Calculator - Profile</title>
-<<<<<<< HEAD
 
-</head>
-
-=======
-   
-</head>
->>>>>>> a8372d3560c6519a17553ff312213ca603b6bf8c
 <body>
 
     <!-- Sidebar -->
@@ -32,11 +22,7 @@
 
     <!-- Main Content -->
     <div class="main-content">
-<<<<<<< HEAD
 
-=======
-        
->>>>>>> a8372d3560c6519a17553ff312213ca603b6bf8c
         <!-- Top Back Arrow -->
         <div class="top-actions">
             <!-- Looks like a "Return" icon in the image -->
@@ -51,11 +37,7 @@
             <h2 class="page-title">Profile</h2>
 
             <form id="profileForm" onsubmit="event.preventDefault(); updateProfile();">
-<<<<<<< HEAD
 
-=======
-                
->>>>>>> a8372d3560c6519a17553ff312213ca603b6bf8c
                 <div class="input-group">
                     <label>Name</label>
                     <input type="text" id="full_name" class="form-input" placeholder="Loading name..." />
@@ -88,12 +70,7 @@
                     <label>Confirm Password</label>
                     <div class="input-wrapper">
                         <input type="password" id="confirm_password" class="form-input" placeholder="● ● ● ● ● ● ● ●" />
-<<<<<<< HEAD
-                        <i class="fa-solid fa-eye-slash toggle-password"
-                            onclick="togglePass('confirm_password', this)"></i>
-=======
-                        <i class="fa-solid fa-eye-slash toggle-password" onclick="togglePass('confirm_password', this)"></i>
->>>>>>> a8372d3560c6519a17553ff312213ca603b6bf8c
+
                     </div>
                 </div>
 
@@ -102,11 +79,7 @@
                 </p>
 
                 <button type="button" onclick="handleLogout()" class="logout-btn">Log Out</button>
-<<<<<<< HEAD
 
-=======
-                
->>>>>>> a8372d3560c6519a17553ff312213ca603b6bf8c
                 <p class="bottom-text">Conditions of Use and Privacy Notice</p>
             </form>
         </div>
@@ -119,11 +92,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="js/supabase-config.js"></script>
     <script>
-<<<<<<< HEAD
 
-=======
-        
->>>>>>> a8372d3560c6519a17553ff312213ca603b6bf8c
         // 1. Password Toggle Logic
         function togglePass(inputId, icon) {
             const input = document.getElementById(inputId);
@@ -142,11 +111,7 @@
         document.addEventListener("DOMContentLoaded", async () => {
             // Check session
             const { data: { session } } = await supabaseClient.auth.getSession();
-<<<<<<< HEAD
 
-=======
-            
->>>>>>> a8372d3560c6519a17553ff312213ca603b6bf8c
             if (!session) {
                 // Not logged in, redirect to login
                 window.location.href = "login.html";
@@ -166,15 +131,7 @@
                     .single();
 
                 if (data) {
-<<<<<<< HEAD
-                    if (data.full_name) document.getElementById("full_name").value = data.full_name;
-                    if (data.address) document.getElementById("address").value = data.address;
-                    if (data.phone) document.getElementById("phone").value = data.phone;
-=======
-                    if(data.full_name) document.getElementById("full_name").value = data.full_name;
-                    if(data.address) document.getElementById("address").value = data.address;
-                    if(data.phone) document.getElementById("phone").value = data.phone;
->>>>>>> a8372d3560c6519a17553ff312213ca603b6bf8c
+
                 }
             } catch (err) {
                 console.log("Profile fetch error (Table might not exist yet):", err);
@@ -183,11 +140,7 @@
 
         // 3. Handle Logout
         async function handleLogout() {
-<<<<<<< HEAD
-            if (confirm("Are you sure you want to log out?")) {
-=======
-            if(confirm("Are you sure you want to log out?")) {
->>>>>>> a8372d3560c6519a17553ff312213ca603b6bf8c
+
                 const { error } = await supabaseClient.auth.signOut();
                 if (error) {
                     alert("Error logging out: " + error.message);
@@ -203,25 +156,7 @@
             const fullName = document.getElementById("full_name").value;
             const address = document.getElementById("address").value;
             const phone = document.getElementById("phone").value;
-<<<<<<< HEAD
 
-            // Password change logic would go here (requires auth.updateUser)
-
-            // Update profile table
-            const { error } = await supabaseClient
-                .from('profiles')
-                .upsert({
-                    id: user.id,
-=======
-            
-            // Password change logic would go here (requires auth.updateUser)
-            
-            // Update profile table
-            const { error } = await supabaseClient
-                .from('profiles')
-                .upsert({ 
-                    id: user.id, 
->>>>>>> a8372d3560c6519a17553ff312213ca603b6bf8c
                     full_name: fullName,
                     address: address,
                     phone: phone
@@ -232,8 +167,5 @@
         }
     </script>
 </body>
-<<<<<<< HEAD
 
-=======
->>>>>>> a8372d3560c6519a17553ff312213ca603b6bf8c
 </html>
