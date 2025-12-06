@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+    <title>Electricity Bill Calculator - Login</title>
+
+</head>
+<body>
+
+    <div class="split-container">
+        
+        <!-- Left Panel: Logo -->
+        <div class="left-panel">
+            <div class="logo-container">
+                <div class="logo-circle">
+                    <!-- Lightning Bolt Icon -->
+                    <i class="fa-solid fa-bolt"></i>
+                </div>
+                <div class="logo-text">
+                    Electricity Bill<br>Calculator
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Panel: Login Form -->
+        <div class="right-panel">
+            <div class="login-content">
+                <h2>Welcome to <br><span>Electricity Bill Calculator</span></h2>
+                
+                <form onsubmit="event.preventDefault(); handleLogin();">
+                    
+                    <div class="input-group">
+                        <label for="email">Username or Email</label>
+                        <input
+                            type="email"
+                            id="email"
+                            class="form-input"
+                            name="email"
+                            placeholder="alrichjaytapoc.202400095@gmail.com"
+                            required
+                        />
+                    </div>
+
+                    <div class="input-group">
+                        <label for="password">Password</label>
+                        <div class="input-wrapper">
+                            <input
+                                type="password"
+                                id="password"
+                                class="form-input"
+                                name="password"
+                                placeholder="● ● ● ● ● ● ● ●"
+                                required
+                            />
+                            <!-- Eye Icon -->
+                            <i class="fa-regular fa-eye toggle-password" onclick="togglePasswordVisibility()"></i>
+                        </div>
+                    </div>
+
+                    <input type="submit" class="submit-btn" value="Log In" />
+                    
+                    <p class="form-footer">
+                        <a href="#">Forgot password?</a>
+                    </p>
+                    <p class="form-footer" style="margin-top: 5px;">
+                        Don't have an account? <a href="register.html">Register here</a>
+                    </p>
+                </form>
+            </div>
+
+            <!-- Decorative Image -->
+            <!-- Note: Replace 'calculator.png' with your actual image file -->
+            <img src="calculator.png" alt="Calculator" class="calculator-img" onerror="this.style.display='none'">
+        </div>
+    </div>
+
+    
+    <script src="https://vnazanftvldhgoggasez.supabase.co/auth/v1/callback"></script>
+    <script src="js/supabase-config.js"></script>
+    <script>
+        // Simple UI script for password toggle
+        function togglePasswordVisibility() {
+            const passwordInput = document.getElementById("password");
+            const icon = document.querySelector(".toggle-password");
+            
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+                icon.classList.remove("fa-eye");
+                icon.classList.add("fa-eye-slash");
+            } else {
+                passwordInput.type = "password";
+                icon.classList.remove("fa-eye-slash");
+                icon.classList.add("fa-eye");
+            }
+        }
+
+        // Redirect if already logged in
+        document.addEventListener("DOMContentLoaded", async () => {
+            if(typeof redirectIfAuthenticated === 'function') {
+                await redirectIfAuthenticated();
+            }
+        });
+
+        async function handleLogin() {
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+
+            if (!email || !password) {
+                alert("Please fill in all fields!");
+                return;
+            }
+
+            // Show loading state
+            const submitBtn = document.querySelector('.submit-btn');
+            const originalValue = submitBtn.value;
+            submitBtn.value = "Logging in...";
+            submitBtn.disabled = true;
+
+            try {
+                
+                const { data, error } = await supabaseClient.auth.signInWithPassword({
+                    email: email,
+                    password: password,
+                });
+
+                if (error) {
+                    alert("Login failed: " + error.message);
+                    submitBtn.value = originalValue;
+                    submitBtn.disabled = false;
+                    return;
+                }
+
+                // Success - redirect to dashboard
+                window.location.href = "user_dashboard.html";
+            } catch (error) {
+                alert("An error occurred: " + error.message);
+                submitBtn.value = originalValue;
+                submitBtn.disabled = false;
+            }
+        }
+
+        // Redirect if authenticated
+        async function redirectIfAuthenticated() {
+            // Ensure checkAuth is defined in your js/supabase-config.js or Supabase logic
+            if(typeof checkAuth === 'function'){
+                 const session = await checkAuth();
+                if (session) {
+                    window.location.href = "user_dashboard.html";
+                }
+            }
+        }
+    </script>
+</body>
+</html>

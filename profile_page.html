@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+    <title>Electric Calculator - Profile</title>
+   
+</head>
+<body>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="brand-box">Electric Calculator</div>
+        <ul class="nav-links">
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="calculator.html">Calculator</a></li>
+            <li><a href="history.html">Result History</a></li>
+            <li><a href="user_dashboard.html" class="active">Profile</a></li>
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        
+        <!-- Top Back Arrow -->
+        <div class="top-actions">
+            <!-- Looks like a "Return" icon in the image -->
+            <i class="fa-solid fa-reply back-icon" onclick="history.back()"></i>
+        </div>
+
+        <!-- Profile Form Container -->
+        <div class="profile-container">
+            <div class="profile-icon">
+                <i class="fa-solid fa-user"></i>
+            </div>
+            <h2 class="page-title">Profile</h2>
+
+            <form id="profileForm" onsubmit="event.preventDefault(); updateProfile();">
+                
+                <div class="input-group">
+                    <label>Name</label>
+                    <input type="text" id="full_name" class="form-input" placeholder="Loading name..." />
+                </div>
+
+                <div class="input-group">
+                    <label>Email</label>
+                    <input type="email" id="email" class="form-input" placeholder="Loading email..." readonly />
+                </div>
+
+                <div class="input-group">
+                    <label>Address</label>
+                    <input type="text" id="address" class="form-input" placeholder="Enter your city/address" />
+                </div>
+
+                <div class="input-group">
+                    <label>Phone</label>
+                    <input type="tel" id="phone" class="form-input" placeholder="+ 123 456 789" />
+                </div>
+
+                <div class="input-group">
+                    <label>Change Password</label>
+                    <div class="input-wrapper">
+                        <input type="password" id="new_password" class="form-input" placeholder="● ● ● ● ● ● ● ●" />
+                        <i class="fa-solid fa-eye-slash toggle-password" onclick="togglePass('new_password', this)"></i>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label>Confirm Password</label>
+                    <div class="input-wrapper">
+                        <input type="password" id="confirm_password" class="form-input" placeholder="● ● ● ● ● ● ● ●" />
+                        <i class="fa-solid fa-eye-slash toggle-password" onclick="togglePass('confirm_password', this)"></i>
+                    </div>
+                </div>
+
+                <p class="disclaimer">
+                    By continuing, you agree to<br> Terms of Use and Privacy Policy.
+                </p>
+
+                <button type="button" onclick="handleLogout()" class="logout-btn">Log Out</button>
+                
+                <p class="bottom-text">Conditions of Use and Privacy Notice</p>
+            </form>
+        </div>
+
+        <!-- Decorative Calculator Image -->
+        <img src="calculator.png" alt="Calculator" class="calculator-img" onerror="this.style.display='none'">
+    </div>
+
+    <!-- Supabase CDN & Logic -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-config.js"></script>
+    <script>
+        
+        // 1. Password Toggle Logic
+        function togglePass(inputId, icon) {
+            const input = document.getElementById(inputId);
+            if (input.type === "password") {
+                input.type = "text";
+                icon.classList.remove("fa-eye-slash");
+                icon.classList.add("fa-eye");
+            } else {
+                input.type = "password";
+                icon.classList.remove("fa-eye");
+                icon.classList.add("fa-eye-slash");
+            }
+        }
+
+        // 2. Fetch User Data on Load
+        document.addEventListener("DOMContentLoaded", async () => {
+            // Check session
+            const { data: { session } } = await supabaseClient.auth.getSession();
+            
+            if (!session) {
+                // Not logged in, redirect to login
+                window.location.href = "login.html";
+                return;
+            }
+
+            // Populate Email (from Auth)
+            document.getElementById("email").value = session.user.email;
+
+            // Fetch Profile Data (Assuming you have a 'profiles' table)
+            // If you haven't created a table yet, this part will just fail silently or log error
+            try {
+                const { data, error } = await supabaseClient
+                    .from('profiles')
+                    .select('full_name, address, phone')
+                    .eq('id', session.user.id)
+                    .single();
+
+                if (data) {
+                    if(data.full_name) document.getElementById("full_name").value = data.full_name;
+                    if(data.address) document.getElementById("address").value = data.address;
+                    if(data.phone) document.getElementById("phone").value = data.phone;
+                }
+            } catch (err) {
+                console.log("Profile fetch error (Table might not exist yet):", err);
+            }
+        });
+
+        // 3. Handle Logout
+        async function handleLogout() {
+            if(confirm("Are you sure you want to log out?")) {
+                const { error } = await supabaseClient.auth.signOut();
+                if (error) {
+                    alert("Error logging out: " + error.message);
+                } else {
+                    window.location.href = "login.html";
+                }
+            }
+        }
+
+        // 4. Update Profile (Optional: If you want to save changes)
+        async function updateProfile() {
+            const { data: { user } } = await supabaseClient.auth.getUser();
+            const fullName = document.getElementById("full_name").value;
+            const address = document.getElementById("address").value;
+            const phone = document.getElementById("phone").value;
+            
+            // Password change logic would go here (requires auth.updateUser)
+            
+            // Update profile table
+            const { error } = await supabaseClient
+                .from('profiles')
+                .upsert({ 
+                    id: user.id, 
+                    full_name: fullName,
+                    address: address,
+                    phone: phone
+                });
+
+            if (error) alert("Error updating profile");
+            else alert("Profile updated!");
+        }
+    </script>
+</body>
+</html>
