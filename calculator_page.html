@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Electric Calculator - Calculate Bill</title>
+   
+</head>
+
+<body>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="brand-box">Electric Calculator</div>
+        <ul class="nav-links">
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="calculator.html" class="active">Calculator</a></li>
+            <li><a href="history.html">Result History</a></li>
+            <li><a href="user_dashboard.html">Profile</a></li>
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+
+        <!-- Header -->
+        <div class="header-top">
+            <div>
+                <div class="breadcrumb">Calculator</div>
+                <div class="user-greeting-small" id="header-greeting">Welcome back, User</div>
+            </div>
+            <i class="fa-solid fa-reply back-icon" onclick="history.back()"></i>
+        </div>
+
+        <div class="welcome-section">
+            <h1>Welcome Back !</h1>
+            <p>Here's your energy consumption overview</p>
+        </div>
+
+        <!-- Calculator Card -->
+        <div class="calc-wrapper">
+            <div class="calculator-card">
+                <div class="card-header">
+                    <!-- Icon similar to image (bill/calculator) -->
+                    <i class="fa-solid fa-file-invoice-dollar"></i>
+                    <span>Calculator Bill</span>
+                </div>
+
+                <form id="calcForm" onsubmit="event.preventDefault(); performCalculation();">
+                    <div class="form-group">
+                        <label>Select Month</label>
+                        <select id="month" class="calc-input">
+                            <option value="January">January</option>
+                            <option value="February">February</option>
+                            <option value="March">March</option>
+                            <option value="April">April</option>
+                            <option value="May">May</option>
+                            <option value="June">June</option>
+                            <option value="July">July</option>
+                            <option value="August">August</option>
+                            <option value="September">September</option>
+                            <option value="October">October</option>
+                            <option value="November">November</option>
+                            <option value="December">December</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Power Consumption (kWh)</label>
+                        <input type="number" id="consumption" class="calc-input" placeholder="e.g. 150" required min="0"
+                            step="0.01">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Cost per kWh ($)</label>
+                        <input type="number" id="cost" class="calc-input" placeholder="e.g. 0.15" required min="0"
+                            step="0.01">
+                    </div>
+
+                    <div class="total-section">
+                        Total: <span id="total-display">$ 0.00</span>
+                    </div>
+
+                    <button type="submit" class="calculate-btn">Calculate</button>
+                    <button type="button" class="save-btn" onclick="saveResult()">Save Result</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="footer-terms">
+            By continuing, you agree to <br> Terms of Use and Privacy Policy.
+        </div>
+
+        <!-- Decorative Image -->
+        <img src="calculator.png" alt="Calculator" class="calculator-img" onerror="this.style.display='none'">
+    </div>
+
+    <!-- Supabase Logic -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-config.js"></script>
+    <script>
+        let currentTotal = 0;
+
+        // 1. Initialize & Auth Check
+        document.addEventListener("DOMContentLoaded", async () => {
+            const { data: { session } } = await supabaseClient.auth.getSession();
+
+            if (!session) {
+                window.location.href = "login.html";
+                return;
+            }
+
+            // Fetch Profile for Name
+            try {
+                const { data, error } = await supabaseClient
+                    .from('profiles')
+                    .select('full_name')
+                    .eq('id', session.user.id)
+                    .single();
+
+                if (data && data.full_name) {
+                    document.getElementById("header-greeting").textContent = "Welcome back, " + data.full_name;
+                }
+            } catch (err) {
+                console.log("Profile fetch error:", err);
+            }
+        });
+
+        // 2. Calculation Logic
+        function performCalculation() {
+            const consumption = parseFloat(document.getElementById('consumption').value);
+            const costPerKwh = parseFloat(document.getElementById('cost').value);
+
+            if (isNaN(consumption) || isNaN(costPerKwh)) {
+                alert("Please enter valid numbers.");
+                return;
+            }
+
+            currentTotal = consumption * costPerKwh;
+
+            // Format to currency
+            document.getElementById('total-display').textContent =
+                "$ " + currentTotal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        }
+
+        // 3. Save Result to Supabase
+        async function saveResult() {
+            // Re-calculate to ensure data is fresh
+            performCalculation();
+
+            if (currentTotal <= 0) {
+                alert("Please calculate a valid bill before saving.");
+                return;
+            }
+
+            const { data: { user } } = await supabaseClient.auth.getUser();
+            const month = document.getElementById('month').value;
+            const consumption = document.getElementById('consumption').value;
+            const cost = document.getElementById('cost').value;
+
+            // Show loading
+            const saveBtn = document.querySelector('.save-btn');
+            saveBtn.textContent = "Saving...";
+
+            try {
+                /* 
+                   Assumes a table named 'bill_history' exists with columns:
+                   user_id (uuid), month (text), kwh (numeric), rate (numeric), total_amount (numeric)
+                */
+                const { error } = await supabaseClient
+                    .from('bill_history')
+                    .insert({
+                        user_id: user.id,
+                        month: month,
+                        kwh: consumption,
+                        rate: cost,
+                        total_amount: currentTotal
+                    });
+
+                if (error) throw error;
+
+                alert("Bill saved successfully!");
+                // Optional: clear form
+                // document.getElementById('calcForm').reset();
+                // document.getElementById('total-display').textContent = "$ 0.00";
+
+            } catch (error) {
+                console.error("Error saving bill:", error);
+                alert("Failed to save: " + error.message);
+            } finally {
+                saveBtn.textContent = "Save Result";
+            }
+        }
+    </script>
+</body>
+
+</html>
