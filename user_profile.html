@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Electric Calculator - Profile</title>
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* --- CSS Reset & Global Styles --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            height: 100vh;
+            width: 100%;
+            display: flex;
+            background-color: #ffffff;
+            overflow: hidden;
+            /* Prevent scrolling on desktop */
+        }
+
+        /* --- Sidebar --- */
+        .sidebar {
+            width: 250px;
+            background-color: #FFFBFB;
+            /* Very faint pinkish tint from image */
+            display: flex;
+            flex-direction: column;
+            padding: 30px 20px;
+            flex-shrink: 0;
+        }
+
+        .brand-box {
+            background-color: #F0F7F4;
+            /* Light mint green box */
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: 700;
+            font-size: 14px;
+            color: #000;
+            margin-bottom: 40px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        .nav-links {
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-bottom: 25px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #000;
+            font-weight: 600;
+            font-size: 14px;
+            display: block;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: #5296ff;
+            /* Highlight color */
+        }
+
+        /* --- Main Content Area --- */
+        .main-content {
+            flex-grow: 1;
+            background-color: #F6F9F6;
+            /* Light greenish/gray background */
+            border-top-left-radius: 40px;
+            border-bottom-left-radius: 40px;
+            padding: 30px 60px;
+            position: relative;
+            overflow-y: auto;
+            /* Allow scrolling inside the panel if content is tall */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* --- Header Actions (Back Arrow) --- */
+        .top-actions {
+            width: 100%;
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 10px;
+        }
+
+        .back-icon {
+            color: #9CACFF;
+            /* Periwinkle blue */
+            font-size: 24px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .back-icon:hover {
+            transform: scale(1.1);
+        }
+
+        /* --- Profile Section --- */
+        .profile-container {
+            width: 100%;
+            max-width: 450px;
+            text-align: center;
+            z-index: 2;
+        }
+
+        .profile-icon {
+            width: 80px;
+            height: 80px;
+            background-color: #5296ff;
+            border-radius: 50%;
+            margin: 0 auto 15px auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 10px rgba(82, 150, 255, 0.3);
+        }
+
+        .profile-icon i {
+            font-size: 40px;
+            color: white;
+        }
+
+        .page-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 30px;
+        }
+
+        /* --- Form Styling --- */
+        .input-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #333;
+            margin-left: 5px;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 15px;
+            background-color: #D0D0D0;
+            /* Darker gray from design */
+            border: none;
+            border-radius: 20px;
+            font-size: 13px;
+            color: #333;
+            outline: none;
+        }
+
+        .form-input::placeholder {
+            color: #7a7a7a;
+        }
+
+        /* Password toggle icon */
+        .toggle-password {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: white;
+            /* Icon looks white/light in image */
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        /* --- Buttons & Footer --- */
+        .disclaimer {
+            font-size: 10px;
+            color: #666;
+            margin: 20px 0 10px 0;
+        }
+
+        .logout-btn {
+            background-color: #9CACFF;
+            color: white;
+            border: none;
+            padding: 12px 60px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(156, 172, 255, 0.4);
+            transition: background 0.3s;
+        }
+
+        .logout-btn:hover {
+            background-color: #8598eb;
+        }
+
+        .bottom-text {
+            font-size: 10px;
+            color: #888;
+            margin-top: 15px;
+        }
+
+        /* --- Decoration --- */
+        .calculator-img {
+            position: fixed;
+            bottom: 40px;
+            right: 40px;
+            width: 180px;
+            transform: rotate(-15deg);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        /* --- Responsive --- */
+        @media (max-width: 768px) {
+            body {
+                flex-direction: column;
+                overflow: auto;
+            }
+
+            .sidebar {
+                width: 100%;
+                padding: 15px;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .brand-box {
+                margin-bottom: 0;
+                padding: 10px;
+            }
+
+            .nav-links {
+                display: flex;
+                gap: 15px;
+                margin-bottom: 0;
+            }
+
+            .nav-links li {
+                margin-bottom: 0;
+            }
+
+            .main-content {
+                border-radius: 30px 30px 0 0;
+                padding: 30px 20px;
+                height: auto;
+            }
+
+            .calculator-img {
+                width: 120px;
+                bottom: 20px;
+                right: 10px;
+                opacity: 0.5;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="brand-box">Electric Calculator</div>
+        <ul class="nav-links">
+            <li><a href="user_dashboard.html">Dashboard</a></li>
+            <li><a href="calculator_page.html">Calculator</a></li>
+            <li><a href="results_page.html">Result History</a></li>
+            <li><a href="user_profile.html" class="active">Profile</a></li>
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+
+        <!-- Top Back Arrow -->
+        <div class="top-actions">
+            <!-- Looks like a "Return" icon in the image -->
+            <i class="fa-solid fa-reply back-icon" onclick="history.back()"></i>
+        </div>
+
+        <!-- Profile Form Container -->
+        <div class="profile-container">
+            <div class="profile-icon">
+                <i class="fa-solid fa-user"></i>
+            </div>
+            <h2 class="page-title">Profile</h2>
+
+            <form id="profileForm" onsubmit="event.preventDefault(); updateProfile();">
+
+                <div class="input-group">
+                    <label>Name</label>
+                    <input type="text" id="full_name" class="form-input" placeholder="Loading name..." />
+                </div>
+
+                <div class="input-group">
+                    <label>Email</label>
+                    <input type="email" id="email" class="form-input" placeholder="Loading email..." readonly />
+                </div>
+
+                <div class="input-group">
+                    <label>Address</label>
+                    <input type="text" id="address" class="form-input" placeholder="Enter your city/address" />
+                </div>
+
+                <div class="input-group">
+                    <label>Phone</label>
+                    <input type="tel" id="phone" class="form-input" placeholder="+ 123 456 789" />
+                </div>
+
+                <div class="input-group">
+                    <label>Change Password</label>
+                    <div class="input-wrapper">
+                        <input type="password" id="new_password" class="form-input" placeholder="● ● ● ● ● ● ● ●" />
+                        <i class="fa-solid fa-eye-slash toggle-password" onclick="togglePass('new_password', this)"></i>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label>Confirm Password</label>
+                    <div class="input-wrapper">
+                        <input type="password" id="confirm_password" class="form-input" placeholder="● ● ● ● ● ● ● ●" />
+                        <i class="fa-solid fa-eye-slash toggle-password"
+                            onclick="togglePass('confirm_password', this)"></i>
+                    </div>
+                </div>
+
+                <p class="disclaimer">
+                    By continuing, you agree to<br> Terms of Use and Privacy Policy.
+                </p>
+
+                <button type="button" onclick="handleLogout()" class="logout-btn">Log Out</button>
+
+                <p class="bottom-text">Conditions of Use and Privacy Notice</p>
+            </form>
+        </div>
+
+        <!-- Decorative Calculator Image -->
+        <img src="calculator.png" alt="Calculator" class="calculator-img" onerror="this.style.display='none'">
+    </div>
+
+    <!-- Supabase CDN & Logic -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-config.js"></script>
+    <script>
+
+        // 1. Password Toggle Logic
+        function togglePass(inputId, icon) {
+            const input = document.getElementById(inputId);
+            if (input.type === "password") {
+                input.type = "text";
+                icon.classList.remove("fa-eye-slash");
+                icon.classList.add("fa-eye");
+            } else {
+                input.type = "password";
+                icon.classList.remove("fa-eye");
+                icon.classList.add("fa-eye-slash");
+            }
+        }
+
+        // 2. Fetch User Data on Load
+        document.addEventListener("DOMContentLoaded", async () => {
+            // Check session
+            const { data: { session } } = await supabaseClient.auth.getSession();
+
+            if (!session) {
+                // Not logged in, redirect to login
+                window.location.href = "login.html";
+                return;
+            }
+
+            // Populate Email (from Auth)
+            document.getElementById("email").value = session.user.email;
+
+            // Fetch Profile Data (Assuming you have a 'profiles' table)
+            // If you haven't created a table yet, this part will just fail silently or log error
+            try {
+                const { data, error } = await supabaseClient
+                    .from('profiles')
+                    .select('full_name, address, phone')
+                    .eq('id', session.user.id)
+                    .single();
+
+                if (data) {
+                    if (data.full_name) document.getElementById("full_name").value = data.full_name;
+                    if (data.address) document.getElementById("address").value = data.address;
+                    if (data.phone) document.getElementById("phone").value = data.phone;
+                }
+            } catch (err) {
+                console.log("Profile fetch error (Table might not exist yet):", err);
+            }
+        });
+
+        // 3. Handle Logout
+        async function handleLogout() {
+            if (confirm("Are you sure you want to log out?")) {
+                const { error } = await supabaseClient.auth.signOut();
+                if (error) {
+                    alert("Error logging out: " + error.message);
+                } else {
+                    window.location.href = "login.html";
+                }
+            }
+        }
+
+        // 4. Update Profile (Optional: If you want to save changes)
+        async function updateProfile() {
+            const { data: { user } } = await supabaseClient.auth.getUser();
+            const fullName = document.getElementById("full_name").value;
+            const address = document.getElementById("address").value;
+            const phone = document.getElementById("phone").value;
+
+            // Password change logic would go here (requires auth.updateUser)
+
+            // Update profile table
+            const { error } = await supabaseClient
+                .from('profiles')
+                .upsert({
+                    id: user.id,
+                    full_name: fullName,
+                    address: address,
+                    phone: phone
+                });
+
+            if (error) alert("Error updating profile");
+            else alert("Profile updated!");
+        }
+    </script>
+</body>
+
+</html>

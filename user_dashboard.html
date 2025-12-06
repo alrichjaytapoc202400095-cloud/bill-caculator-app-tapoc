@@ -4,8 +4,286 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" type="text/css" href="css/style.css" />
     <title>Electric Calculator - Dashboard</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* --- CSS Reset & Global --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            height: 100vh;
+            width: 100%;
+            display: flex;
+            background-color: #ffffff;
+            overflow: hidden;
+        }
+
+        /* --- Sidebar --- */
+        .sidebar {
+            width: 250px;
+            background-color: #FFFBFB;
+            display: flex;
+            flex-direction: column;
+            padding: 30px 20px;
+            flex-shrink: 0;
+        }
+
+        .brand-box {
+            background-color: #F0F7F4;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: 700;
+            font-size: 14px;
+            color: #000;
+            margin-bottom: 40px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        .nav-links {
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-bottom: 25px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #000;
+            font-weight: 600;
+            font-size: 14px;
+            display: block;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: #5296ff;
+        }
+
+        /* --- Main Content --- */
+        .main-content {
+            flex-grow: 1;
+            background-color: #F6F9F6;
+            border-top-left-radius: 40px;
+            border-bottom-left-radius: 40px;
+            padding: 30px 60px;
+            position: relative;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        .header-top {
+            margin-bottom: 20px;
+        }
+
+        .breadcrumb {
+            font-size: 14px;
+            font-weight: 700;
+            color: #333;
+        }
+
+        .user-greeting-small {
+            font-size: 12px;
+            color: #666;
+            margin-top: 4px;
+        }
+
+        .welcome-section {
+            margin-bottom: 30px;
+        }
+
+        .welcome-section h1 {
+            font-size: 28px;
+            font-weight: 800;
+            margin-bottom: 5px;
+        }
+
+        .welcome-section p {
+            font-size: 13px;
+            color: #555;
+        }
+
+        /* --- Stats Row (Pill Cards) --- */
+        .stats-row {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .stat-card {
+            background-color: #ffffff;
+            border-radius: 50px;
+            /* Pill shape */
+            padding: 15px 30px;
+            flex: 1;
+            min-width: 150px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .stat-value {
+            font-size: 16px;
+            font-weight: 800;
+            color: #000;
+        }
+
+        /* --- Quick Actions Row --- */
+        .actions-row {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .action-card {
+            background-color: #ffffff;
+            border-radius: 15px;
+            padding: 20px;
+            flex: 1;
+            min-width: 200px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
+            text-decoration: none;
+            color: inherit;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .action-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .action-title {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .action-desc {
+            font-size: 11px;
+            color: #666;
+        }
+
+        /* --- Recent Results Section --- */
+        .recent-section h3 {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #222;
+        }
+
+        .recent-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            padding-bottom: 40px;
+            /* Space for footer */
+        }
+
+        .recent-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 10px;
+        }
+
+        .recent-info {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .recent-month {
+            font-weight: 700;
+            font-size: 14px;
+            color: #222;
+        }
+
+        .recent-details {
+            font-size: 13px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .recent-price {
+            font-weight: 800;
+            font-size: 14px;
+            color: #000;
+        }
+
+        /* --- Footer --- */
+        .footer-terms {
+            margin-top: auto;
+            text-align: center;
+            font-size: 10px;
+            color: #666;
+            padding-top: 20px;
+        }
+
+        /* --- Responsive --- */
+        @media (max-width: 768px) {
+            body {
+                flex-direction: column;
+                overflow: auto;
+            }
+
+            .sidebar {
+                width: 100%;
+                padding: 15px;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .brand-box {
+                margin-bottom: 0;
+                padding: 10px;
+            }
+
+            .nav-links {
+                display: flex;
+                gap: 15px;
+                margin-bottom: 0;
+            }
+
+            .nav-links li {
+                margin-bottom: 0;
+            }
+
+            .main-content {
+                border-radius: 30px 30px 0 0;
+                padding: 30px 20px;
+            }
+
+            .stats-row,
+            .actions-row {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
 
 <body>
 
@@ -13,10 +291,10 @@
     <div class="sidebar">
         <div class="brand-box">Electric Calculator</div>
         <ul class="nav-links">
-            <li><a href="dashboard.html" class="active">Dashboard</a></li>
-            <li><a href="calculator.html">Calculator</a></li>
-            <li><a href="history.html">Result History</a></li>
-            <li><a href="user_dashboard.html">Profile</a></li>
+            <li><a href="user_dashboard.html" class="active">Dashboard</a></li>
+            <li><a href="calculator_page.html">Calculator</a></li>
+            <li><a href="results_page.html">Result History</a></li>
+            <li><a href="user_profile.html">Profile</a></li>
         </ul>
     </div>
 
@@ -52,11 +330,11 @@
 
         <!-- Quick Actions -->
         <div class="actions-row">
-            <a href="calculator.html" class="action-card">
+            <a href="calculator_page.html" class="action-card">
                 <div class="action-title">Calculator</div>
                 <div class="action-desc">Calculate your energy bill</div>
             </a>
-            <a href="history.html" class="action-card">
+            <a href="results_page.html" class="action-card">
                 <div class="action-title">Results</div>
                 <div class="action-desc">View calculation history</div>
             </a>
@@ -84,12 +362,14 @@
     <!-- Supabase Logic -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="js/supabase-config.js"></script>
-    <script src="js/auth.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", async () => {
             // 1. Auth Check
-            const session = await initAuth();
-            if (!session) return;
+            const { data: { session } } = await supabaseClient.auth.getSession();
+            if (!session) {
+                window.location.href = "login.html";
+                return;
+            }
 
             // 2. Fetch User Name
             try {
@@ -120,7 +400,7 @@
                 if (error) throw error;
 
                 if (!data || data.length === 0) {
-
+                    document.getElementById('recent-list-container').innerHTML =
                         '<div style="text-align:center; font-size:12px; color:#777;">No calculations yet.</div>';
                     return;
                 }
@@ -155,6 +435,10 @@
                     const div = document.createElement('div');
                     div.className = 'recent-item';
 
+                    // Format: Month Year (assuming month is stored as text like "January")
+                    // We'll just use the stored month + current year for display if year isn't stored
+                    const displayMonth = item.month || "Unknown";
+                    const displayYear = new Date(item.created_at).getFullYear();
 
                     div.innerHTML = `
                         <div class="recent-info">

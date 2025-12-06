@@ -4,8 +4,263 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" type="text/css" href="css/style.css" />
     <title>Electricity Bill Calculator - Register</title>
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* --- CSS Reset & Global Styles --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            height: 100vh;
+            width: 100%;
+            display: flex;
+            overflow: hidden;
+        }
+
+        /* --- Layout: Split Screen --- */
+        .split-container {
+            display: flex;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* --- Left Side (Logo) --- */
+        .left-panel {
+            flex: 0.8;
+            background-color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            min-width: 350px;
+        }
+
+        .logo-container {
+            text-align: center;
+        }
+
+        .logo-circle {
+            width: 140px;
+            height: 140px;
+            background-color: #5296ff;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 20px auto;
+            border: 4px solid #8cbaff;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo-circle i {
+            font-size: 70px;
+            color: white;
+        }
+
+        .logo-text {
+            font-size: 22px;
+            font-weight: 800;
+            color: #000;
+            line-height: 1.4;
+        }
+
+        /* --- Right Side (Form) --- */
+        .right-panel {
+            flex: 1.2;
+            background-color: #F6F9F6;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            border-top-left-radius: 30px;
+            border-bottom-left-radius: 30px;
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.02);
+            padding: 20px;
+            overflow-y: auto;
+            /* Allow scrolling for small screens */
+        }
+
+        /* Back Icon (Top Right) */
+        .back-icon {
+            position: absolute;
+            top: 30px;
+            right: 40px;
+            font-size: 20px;
+            color: #9CACFF;
+            cursor: pointer;
+            transition: transform 0.2s;
+            z-index: 10;
+        }
+
+        .back-icon:hover {
+            transform: scale(1.1);
+        }
+
+        .register-content {
+            width: 100%;
+            max-width: 420px;
+            margin-top: 40px;
+            /* Space from top */
+            z-index: 2;
+        }
+
+        .register-content h2 {
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 25px;
+            color: #000;
+            font-weight: 700;
+        }
+
+        /* --- Form Styling --- */
+        .form-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            /* Space between fields */
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 11px;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #333;
+            margin-left: 5px;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 15px;
+            background-color: #D9D9D9;
+            border: none;
+            border-radius: 10px;
+            /* Rounded pill shape */
+            font-size: 13px;
+            color: #333;
+            outline: none;
+        }
+
+        .form-input:focus {
+            background-color: #cfcfcf;
+        }
+
+        .form-input::placeholder {
+            color: #888;
+            font-size: 11px;
+        }
+
+        /* Eye Icon styling */
+        .toggle-password {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #777;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        /* Terms Text */
+        .terms-text {
+            text-align: center;
+            font-size: 9px;
+            color: #555;
+            margin-top: 15px;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+
+        .submit-btn {
+            width: 50%;
+            background-color: #9CACFF;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            margin: 0 auto;
+            display: block;
+            transition: background 0.3s;
+            box-shadow: 0 2px 5px rgba(156, 172, 255, 0.4);
+        }
+
+        .submit-btn:hover {
+            background-color: #7b8de6;
+        }
+
+        .form-footer {
+            text-align: center;
+            font-size: 11px;
+            margin-top: 15px;
+            margin-bottom: 40px;
+            /* Space at bottom for scrolling */
+        }
+
+        .form-footer a {
+            color: #333;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        /* --- Decorative Elements --- */
+        .calculator-img {
+            position: absolute;
+            bottom: 30px;
+            right: 30px;
+            width: 180px;
+            transform: rotate(-15deg);
+            opacity: 0.9;
+            z-index: 1;
+            pointer-events: none;
+            /* Let clicks pass through if it covers anything */
+        }
+
+        /* --- Responsive Design --- */
+        @media (max-width: 768px) {
+            .split-container {
+                flex-direction: column;
+                overflow-y: auto;
+            }
+
+            .left-panel {
+                min-height: 200px;
+                flex: 0 0 auto;
+                padding: 20px;
+            }
+
+            .right-panel {
+                flex: 1 0 auto;
+                border-radius: 30px 30px 0 0;
+                padding-bottom: 50px;
+            }
+
+            .calculator-img {
+                width: 120px;
+                bottom: 10px;
+                right: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="split-container">
 
         <!-- Left Panel: Logo -->
         <div class="left-panel">
@@ -30,16 +285,20 @@
                 <!-- Typo in image corrected to "Register" -->
                 <h2>Register Account</h2>
 
+                <form onsubmit="event.preventDefault(); handleRegister();">
+                    <div class="form-grid">
+
                         <!-- Full Name -->
                         <div class="input-group">
                             <label for="fullName">Full Name</label>
-                            <input type="text" id="fullName" class="form-input" placeholder="alrichjaytapoc" required />
+                            <input type="text" id="fullName" class="form-input" placeholder="e.g. John Doe" required />
                         </div>
 
                         <!-- Email -->
                         <div class="input-group">
                             <label for="email">Email</label>
-
+                            <input type="email" id="email" class="form-input" placeholder="example@example.com"
+                                required />
                         </div>
 
                         <!-- Mobile Number -->
@@ -53,14 +312,18 @@
                             <label for="dob">Date of Birth</label>
                             <!-- Using type="text" with placeholder to match design visually, 
                                  or type="date" for functionality. Keeping text for visual match. -->
-
+                            <input type="text" id="dob" class="form-input" placeholder="DD / MM / YYYY"
+                                onfocus="(this.type='date')" onblur="(this.type='text')" />
                         </div>
 
                         <!-- Password -->
                         <div class="input-group">
                             <label for="password">Password</label>
                             <div class="input-wrapper">
-
+                                <input type="password" id="password" class="form-input" placeholder="● ● ● ● ● ● ● ●"
+                                    required />
+                                <i class="fa-regular fa-eye toggle-password"
+                                    onclick="togglePassword('password', this)"></i>
                             </div>
                         </div>
 
@@ -68,7 +331,10 @@
                         <div class="input-group">
                             <label for="confirmPassword">Confirm Password</label>
                             <div class="input-wrapper">
-
+                                <input type="password" id="confirmPassword" class="form-input"
+                                    placeholder="● ● ● ● ● ● ● ●" required />
+                                <i class="fa-regular fa-eye toggle-password"
+                                    onclick="togglePassword('confirmPassword', this)"></i>
                             </div>
                         </div>
                     </div>
@@ -94,7 +360,6 @@
     <!-- Supabase Logic -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="js/supabase-config.js"></script>
-    <script src="js/auth.js"></script>
     <script>
         // Toggle Password Visibility
         function togglePassword(inputId, icon) {
