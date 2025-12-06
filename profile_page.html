@@ -148,7 +148,6 @@
                     window.location.href = "login.html";
                 }
             }
-        }
 
         // 4. Update Profile (Optional: If you want to save changes)
         async function updateProfile() {
@@ -157,10 +156,14 @@
             const address = document.getElementById("address").value;
             const phone = document.getElementById("phone").value;
 
+            const { error } = await supabaseClient
+                .from('profiles')
+                .update({
                     full_name: fullName,
                     address: address,
                     phone: phone
-                });
+                })
+                .eq('id', user.id);
 
             if (error) alert("Error updating profile");
             else alert("Profile updated!");
