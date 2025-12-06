@@ -74,6 +74,16 @@
         By continuing, you agree to Terms of Use and Privacy Policy.
     </div>
 
+    <!-- Supabase & Auth -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-config.js"></script>
+    <script src="js/auth.js"></script>
+    <script>
+        // Redirect to dashboard if already logged in
+        document.addEventListener("DOMContentLoaded", async () => {
+            await redirectIfAuthenticated();
+        });
+    </script>
 </body>
 
 </html>

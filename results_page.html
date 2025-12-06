@@ -85,15 +85,12 @@
     <!-- Supabase Logic -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="js/supabase-config.js"></script>
+    <script src="js/auth.js"></script>
     <script>
         // Initialize
         document.addEventListener("DOMContentLoaded", async () => {
-            const { data: { session } } = await supabaseClient.auth.getSession();
-
-            if (!session) {
-                window.location.href = "login.html";
-                return;
-            }
+            const session = await initAuth();
+            if (!session) return;
 
             await fetchHistory(session.user.id);
         });

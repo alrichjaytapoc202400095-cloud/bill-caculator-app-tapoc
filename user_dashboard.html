@@ -84,14 +84,12 @@
     <!-- Supabase Logic -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="js/supabase-config.js"></script>
+    <script src="js/auth.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", async () => {
             // 1. Auth Check
-            const { data: { session } } = await supabaseClient.auth.getSession();
-            if (!session) {
-                window.location.href = "login.html";
-                return;
-            }
+            const session = await initAuth();
+            if (!session) return;
 
             // 2. Fetch User Name
             try {

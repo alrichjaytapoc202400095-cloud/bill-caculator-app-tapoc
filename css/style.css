@@ -1,3 +1,1833 @@
 /* CSS Stylesheet for Electric Calculator Application */
 
 
+/* CSS Stylesheet for Electric Calculator Application */
+/* --- CSS Reset & Global --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    background-color: #ffffff;
+    overflow: hidden;
+}
+
+/* --- Sidebar --- */
+.sidebar {
+    width: 250px;
+    background-color: #FFFBFB;
+    display: flex;
+    flex-direction: column;
+    padding: 30px 20px;
+    flex-shrink: 0;
+}
+
+.brand-box {
+    background-color: #F0F7F4;
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+    font-weight: 700;
+    font-size: 14px;
+    color: #000;
+    margin-bottom: 40px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.nav-links {
+    list-style: none;
+}
+
+.nav-links li {
+    margin-bottom: 25px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #000;
+    font-weight: 600;
+    font-size: 14px;
+    display: block;
+    transition: color 0.2s;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+    color: #5296ff;
+}
+
+/* --- Main Content --- */
+.main-content {
+    flex-grow: 1;
+    background-color: #F6F9F6;
+    border-top-left-radius: 40px;
+    border-bottom-left-radius: 40px;
+    padding: 30px 60px;
+    position: relative;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Top Header Area */
+.header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 10px;
+}
+
+.breadcrumb {
+    font-size: 14px;
+    font-weight: 700;
+    color: #333;
+}
+
+.user-greeting-small {
+    font-size: 12px;
+    color: #666;
+    margin-top: 4px;
+}
+
+.back-icon {
+    color: #9CACFF;
+    font-size: 24px;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.back-icon:hover {
+    transform: scale(1.1);
+}
+
+/* Welcome Headlines */
+.welcome-section {
+    margin-bottom: 30px;
+}
+
+.welcome-section h1 {
+    font-size: 28px;
+    font-weight: 800;
+    margin-bottom: 5px;
+}
+
+.welcome-section p {
+    font-size: 13px;
+    color: #555;
+}
+
+/* --- Calculator Card --- */
+.calc-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    /* Centers the card horizontally */
+    z-index: 2;
+}
+
+.calculator-card {
+    background-color: #E6E6E6;
+    /* The gray card color */
+    padding: 30px 40px;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 450px;
+    /* Limits width to look like image */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 25px;
+    font-weight: 600;
+    font-size: 16px;
+    color: #333;
+}
+
+.card-header i {
+    font-size: 20px;
+    color: #666;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 5px;
+    color: #222;
+}
+
+.calc-input {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #FFFFFF;
+    font-size: 14px;
+    outline: none;
+}
+
+/* Total Section */
+.total-section {
+    margin: 20px 0;
+    font-weight: 600;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#total-display {
+    font-weight: 800;
+    font-size: 18px;
+}
+
+/* Buttons */
+.calculate-btn {
+    width: 100%;
+    background-color: #FFFFFF;
+    color: #000;
+    font-weight: 700;
+    border: none;
+    padding: 12px;
+    border-radius: 25px;
+    /* Pill shape */
+    cursor: pointer;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: background 0.2s;
+}
+
+.calculate-btn:hover {
+    background-color: #f0f0f0;
+}
+
+.save-btn {
+    width: 100%;
+    background: none;
+    border: none;
+    color: #555;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    text-decoration: none;
+    display: block;
+    text-align: center;
+}
+
+.save-btn:hover {
+    color: #000;
+}
+
+/* --- Footer & Images --- */
+.footer-terms {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    font-size: 10px;
+    color: #666;
+    width: 100%;
+}
+
+.calculator-img {
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+    width: 180px;
+    transform: rotate(-15deg);
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* --- Responsive --- */
+@media (max-width: 768px) {
+    body {
+        flex-direction: column;
+        overflow: auto;
+    }
+
+    .sidebar {
+        width: 100%;
+        padding: 15px;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .brand-box {
+        margin-bottom: 0;
+        padding: 10px;
+    }
+
+    .nav-links {
+        display: flex;
+        gap: 15px;
+        margin-bottom: 0;
+    }
+
+    .nav-links li {
+        margin-bottom: 0;
+    }
+
+    .main-content {
+        border-radius: 30px 30px 0 0;
+        padding: 30px 20px;
+        min-height: 80vh;
+    }
+
+    .calculator-img {
+        width: 100px;
+        opacity: 0.5;
+        bottom: 10px;
+        right: 10px;
+    }
+
+    .header-top {
+        margin-bottom: 20px;
+    }
+}
+
+/* CSS Stylesheet for Login/Signup Page */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    overflow: hidden;
+    /* Prevents scrollbars if content fits */
+}
+
+/* --- Layout: Split Screen --- */
+.split-container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+}
+
+/* --- Left Side (Logo) --- */
+.left-panel {
+    flex: 1;
+    /* Takes up roughly 40-50% */
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    min-width: 400px;
+}
+
+.logo-container {
+    text-align: center;
+}
+
+.logo-circle {
+    width: 150px;
+    height: 150px;
+    background-color: #5296ff;
+    /* The blue circle color */
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto 20px auto;
+    border: 4px solid #8cbaff;
+    /* Lighter blue border ring */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.logo-circle i {
+    font-size: 80px;
+    color: white;
+}
+
+.logo-text {
+    font-size: 24px;
+    font-weight: 800;
+    color: #000;
+    line-height: 1.4;
+}
+
+/* --- Right Side (Form) --- */
+.right-panel {
+    flex: 1.3;
+    /* Slightly wider than left */
+    background-color: #F6F9F6;
+    /* Light greenish/gray background */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
+    /* Box shadow to separate panels slightly if needed */
+    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.02);
+}
+
+.login-content {
+    width: 100%;
+    max-width: 400px;
+    z-index: 2;
+    /* Ensures form is above decoration */
+}
+
+.login-content h2 {
+    text-align: center;
+    font-size: 28px;
+    margin-bottom: 40px;
+    color: #000;
+}
+
+.login-content h2 span {
+    display: block;
+    margin-top: 5px;
+}
+
+/* --- Form Styling --- */
+.input-group {
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.input-group label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #333;
+}
+
+.input-wrapper {
+    position: relative;
+}
+
+.form-input {
+    width: 100%;
+    padding: 15px;
+    padding-right: 40px;
+    /* Space for eye icon */
+    background-color: #D9D9D9;
+    /* The gray input background */
+    border: none;
+    border-radius: 12px;
+    font-size: 14px;
+    color: #333;
+    outline: none;
+    transition: background 0.2s;
+}
+
+.form-input:focus {
+    background-color: #d1d1d1;
+}
+
+.form-input::placeholder {
+    color: #7a7a7a;
+    font-size: 12px;
+}
+
+/* Eye Icon styling */
+.toggle-password {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #777;
+    cursor: pointer;
+}
+
+.submit-btn {
+    width: 50%;
+    background-color: #9CACFF;
+    /* Periwinkle blue */
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 25px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    margin: 20px auto;
+    display: block;
+    transition: background 0.3s;
+}
+
+.submit-btn:hover {
+    background-color: #7b8de6;
+}
+
+.submit-btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.form-footer {
+    text-align: center;
+    font-size: 12px;
+    margin-top: 15px;
+}
+
+.form-footer a {
+    color: #333;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* --- Decorative Elements --- */
+.calculator-img {
+    position: absolute;
+    bottom: 50px;
+    right: 50px;
+    width: 200px;
+    transform: rotate(-15deg);
+    opacity: 0.9;
+    z-index: 1;
+    /* Placeholder styling in case image is missing */
+    display: block;
+}
+
+/* --- Responsive Design --- */
+@media (max-width: 768px) {
+    .split-container {
+        flex-direction: column;
+    }
+
+    .left-panel {
+        min-width: 100%;
+        padding: 20px;
+        flex: 0 0 auto;
+    }
+
+    .right-panel {
+        border-radius: 30px 30px 0 0;
+        padding: 40px 20px;
+    }
+
+    .calculator-img {
+        display: none;
+        /* Hide decorative image on mobile */
+    }
+
+    .logo-circle {
+        width: 80px;
+        height: 80px;
+    }
+
+    .logo-circle i {
+        font-size: 40px;
+    }
+
+    .logo-text {
+        font-size: 18px;
+    }
+}
+
+/* CSS Stylesheet for Landing Page */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* --- Header --- */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 50px;
+    background-color: #ffffff;
+}
+
+.logo-area {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.logo-circle {
+    width: 50px;
+    height: 50px;
+    background-color: #5296ff;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 24px;
+    border: 2px solid #8cbaff;
+}
+
+.app-name {
+    font-weight: 700;
+    font-size: 18px;
+    color: #000;
+}
+
+.auth-buttons {
+    display: flex;
+    gap: 15px;
+}
+
+.btn {
+    padding: 10px 30px;
+    border-radius: 25px;
+    border: none;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: opacity 0.2s;
+}
+
+.btn:hover {
+    opacity: 0.9;
+}
+
+.btn-register {
+    background-color: #9CACFF;
+    /* Periwinkle */
+    color: white;
+}
+
+.btn-login {
+    background-color: #8598eb;
+    /* Slightly darker blue */
+    color: white;
+}
+
+/* --- Hero Section --- */
+.hero-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 60px 100px;
+    background-color: #ffffff;
+    flex: 1;
+    /* Takes available space */
+}
+
+.hero-text {
+    max-width: 500px;
+}
+
+.hero-text h1 {
+    font-size: 42px;
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 20px;
+    color: #000;
+}
+
+.hero-text h1 span {
+    font-style: italic;
+    /* Matches the "Electric" style in image */
+}
+
+.hero-text p {
+    font-size: 16px;
+    color: #444;
+    line-height: 1.5;
+}
+
+.hero-image-container {
+    position: relative;
+}
+
+.hero-calculator-img {
+    width: 300px;
+    transform: rotate(-15deg);
+    filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.1));
+}
+
+/* --- Features Section --- */
+.features-section {
+    background-color: #F6F9F6;
+    /* Light greenish/gray background */
+    padding: 60px 100px 40px 100px;
+    display: flex;
+    justify-content: space-between;
+    gap: 40px;
+    text-align: center;
+}
+
+.feature-box {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.icon-wrapper {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Custom styling for icons to match the colorful look in image */
+.icon-wrapper i {
+    font-size: 40px;
+}
+
+.icon-calc {
+    color: #9CACFF;
+}
+
+.icon-history {
+    color: #f28b82;
+}
+
+.icon-security {
+    color: #5296ff;
+}
+
+.feature-box h3 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #000;
+}
+
+.feature-box p {
+    font-size: 12px;
+    color: #555;
+    line-height: 1.4;
+    max-width: 250px;
+}
+
+/* --- Footer --- */
+.footer-text {
+    background-color: #F6F9F6;
+    text-align: center;
+    padding: 20px;
+    font-size: 10px;
+    color: #666;
+    font-weight: 600;
+}
+
+/* --- Responsive --- */
+@media (max-width: 900px) {
+    header {
+        padding: 20px;
+    }
+
+    .hero-section {
+        flex-direction: column;
+        padding: 40px 20px;
+        text-align: center;
+    }
+
+    .hero-text h1 {
+        font-size: 32px;
+    }
+
+    .hero-calculator-img {
+        width: 200px;
+        margin-top: 40px;
+    }
+
+    .features-section {
+        flex-direction: column;
+        padding: 40px 20px;
+    }
+
+    .feature-box {
+        margin-bottom: 30px;
+    }
+}
+
+/* CSS Stylesheet for Profile Page */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    background-color: #ffffff;
+    overflow: hidden;
+    /* Prevent scrolling on desktop */
+}
+
+/* --- Sidebar --- */
+.sidebar {
+    width: 250px;
+    background-color: #FFFBFB;
+    /* Very faint pinkish tint from image */
+    display: flex;
+    flex-direction: column;
+    padding: 30px 20px;
+    flex-shrink: 0;
+}
+
+.brand-box {
+    background-color: #F0F7F4;
+    /* Light mint green box */
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+    font-weight: 700;
+    font-size: 14px;
+    color: #000;
+    margin-bottom: 40px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.nav-links {
+    list-style: none;
+}
+
+.nav-links li {
+    margin-bottom: 25px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #000;
+    font-weight: 600;
+    font-size: 14px;
+    display: block;
+    transition: color 0.2s;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+    color: #5296ff;
+    /* Highlight color */
+}
+
+/* --- Main Content Area --- */
+.main-content {
+    flex-grow: 1;
+    background-color: #F6F9F6;
+    /* Light greenish/gray background */
+    border-top-left-radius: 40px;
+    border-bottom-left-radius: 40px;
+    padding: 30px 60px;
+    position: relative;
+    overflow-y: auto;
+    /* Allow scrolling inside the panel if content is tall */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* --- Header Actions (Back Arrow) --- */
+.top-actions {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 10px;
+}
+
+.back-icon {
+    color: #9CACFF;
+    /* Periwinkle blue */
+    font-size: 24px;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.back-icon:hover {
+    transform: scale(1.1);
+}
+
+/* --- Profile Section --- */
+.profile-container {
+    width: 100%;
+    max-width: 450px;
+    text-align: center;
+    z-index: 2;
+}
+
+.profile-icon {
+    width: 80px;
+    height: 80px;
+    background-color: #5296ff;
+    border-radius: 50%;
+    margin: 0 auto 15px auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 10px rgba(82, 150, 255, 0.3);
+}
+
+.profile-icon i {
+    font-size: 40px;
+    color: white;
+}
+
+.page-title {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 30px;
+}
+
+/* --- Form Styling --- */
+.input-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.input-group label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: #333;
+    margin-left: 5px;
+}
+
+.input-wrapper {
+    position: relative;
+}
+
+.form-input {
+    width: 100%;
+    padding: 12px 15px;
+    background-color: #D0D0D0;
+    /* Darker gray from design */
+    border: none;
+    border-radius: 20px;
+    font-size: 13px;
+    color: #333;
+    outline: none;
+}
+
+.form-input::placeholder {
+    color: #7a7a7a;
+}
+
+/* Password toggle icon */
+.toggle-password {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: white;
+    /* Icon looks white/light in image */
+    cursor: pointer;
+    font-size: 12px;
+}
+
+/* --- Buttons & Footer --- */
+.disclaimer {
+    font-size: 10px;
+    color: #666;
+    margin: 20px 0 10px 0;
+}
+
+.logout-btn {
+    background-color: #9CACFF;
+    color: white;
+    border: none;
+    padding: 12px 60px;
+    border-radius: 25px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(156, 172, 255, 0.4);
+    transition: background 0.3s;
+}
+
+.logout-btn:hover {
+    background-color: #8598eb;
+}
+
+.bottom-text {
+    font-size: 10px;
+    color: #888;
+    margin-top: 15px;
+}
+
+/* --- Decoration --- */
+.calculator-img {
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+    width: 180px;
+    transform: rotate(-15deg);
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* --- Responsive --- */
+@media (max-width: 768px) {
+    body {
+        flex-direction: column;
+        overflow: auto;
+    }
+
+    .sidebar {
+        width: 100%;
+        padding: 15px;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .brand-box {
+        margin-bottom: 0;
+        padding: 10px;
+    }
+
+    .nav-links {
+        display: flex;
+        gap: 15px;
+        margin-bottom: 0;
+    }
+
+    .nav-links li {
+        margin-bottom: 0;
+    }
+
+    .main-content {
+        border-radius: 30px 30px 0 0;
+        padding: 30px 20px;
+        height: auto;
+    }
+
+    .calculator-img {
+        width: 120px;
+        bottom: 20px;
+        right: 10px;
+        opacity: 0.5;
+    }
+}
+
+/* CSS Stylesheet for Registration Page */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    overflow: hidden;
+}
+
+/* --- Layout: Split Screen --- */
+.split-container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+}
+
+/* --- Left Side (Logo) --- */
+.left-panel {
+    flex: 0.8;
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    min-width: 350px;
+}
+
+.logo-container {
+    text-align: center;
+}
+
+.logo-circle {
+    width: 140px;
+    height: 140px;
+    background-color: #5296ff;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto 20px auto;
+    border: 4px solid #8cbaff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.logo-circle i {
+    font-size: 70px;
+    color: white;
+}
+
+.logo-text {
+    font-size: 22px;
+    font-weight: 800;
+    color: #000;
+    line-height: 1.4;
+}
+
+/* --- Right Side (Form) --- */
+.right-panel {
+    flex: 1.2;
+    background-color: #F6F9F6;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
+    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.02);
+    padding: 20px;
+    overflow-y: auto;
+    /* Allow scrolling for small screens */
+}
+
+/* Back Icon (Top Right) */
+.back-icon {
+    position: absolute;
+    top: 30px;
+    right: 40px;
+    font-size: 20px;
+    color: #9CACFF;
+    cursor: pointer;
+    transition: transform 0.2s;
+    z-index: 10;
+}
+
+.back-icon:hover {
+    transform: scale(1.1);
+}
+
+.register-content {
+    width: 100%;
+    max-width: 420px;
+    margin-top: 40px;
+    /* Space from top */
+    z-index: 2;
+}
+
+.register-content h2 {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 25px;
+    color: #000;
+    font-weight: 700;
+}
+
+/* --- Form Styling --- */
+.form-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    /* Space between fields */
+}
+
+.input-group label {
+    display: block;
+    font-size: 11px;
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: #333;
+    margin-left: 5px;
+}
+
+.input-wrapper {
+    position: relative;
+}
+
+.form-input {
+    width: 100%;
+    padding: 12px 15px;
+    background-color: #D9D9D9;
+    border: none;
+    border-radius: 10px;
+    /* Rounded pill shape */
+    font-size: 13px;
+    color: #333;
+    outline: none;
+}
+
+.form-input:focus {
+    background-color: #cfcfcf;
+}
+
+.form-input::placeholder {
+    color: #888;
+    font-size: 11px;
+}
+
+/* Eye Icon styling */
+.toggle-password {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #777;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+/* Terms Text */
+.terms-text {
+    text-align: center;
+    font-size: 9px;
+    color: #555;
+    margin-top: 15px;
+    margin-bottom: 10px;
+    line-height: 1.4;
+}
+
+.submit-btn {
+    width: 50%;
+    background-color: #9CACFF;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    margin: 0 auto;
+    display: block;
+    transition: background 0.3s;
+    box-shadow: 0 2px 5px rgba(156, 172, 255, 0.4);
+}
+
+.submit-btn:hover {
+    background-color: #7b8de6;
+}
+
+.form-footer {
+    text-align: center;
+    font-size: 11px;
+    margin-top: 15px;
+    margin-bottom: 40px;
+    /* Space at bottom for scrolling */
+}
+
+.form-footer a {
+    color: #333;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* --- Decorative Elements --- */
+.calculator-img {
+    position: absolute;
+    bottom: 30px;
+    right: 30px;
+    width: 180px;
+    transform: rotate(-15deg);
+    opacity: 0.9;
+    z-index: 1;
+    pointer-events: none;
+    /* Let clicks pass through if it covers anything */
+}
+
+/* --- Responsive Design --- */
+@media (max-width: 768px) {
+    .split-container {
+        flex-direction: column;
+        overflow-y: auto;
+    }
+
+    .left-panel {
+        min-height: 200px;
+        flex: 0 0 auto;
+        padding: 20px;
+    }
+
+    .right-panel {
+        flex: 1 0 auto;
+        border-radius: 30px 30px 0 0;
+        padding-bottom: 50px;
+    }
+
+    .calculator-img {
+        width: 120px;
+        bottom: 10px;
+        right: 10px;
+    }
+}
+
+/* CSS Stylesheet for History Page */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    background-color: #ffffff;
+    overflow: hidden;
+}
+
+/* --- Sidebar (Consistent with other pages) --- */
+.sidebar {
+    width: 250px;
+    background-color: #FFFBFB;
+    display: flex;
+    flex-direction: column;
+    padding: 30px 20px;
+    flex-shrink: 0;
+}
+
+.brand-box {
+    background-color: #F0F7F4;
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+    font-weight: 700;
+    font-size: 14px;
+    color: #000;
+    margin-bottom: 40px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.nav-links {
+    list-style: none;
+}
+
+.nav-links li {
+    margin-bottom: 25px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #000;
+    font-weight: 600;
+    font-size: 14px;
+    display: block;
+    transition: color 0.2s;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+    color: #5296ff;
+}
+
+/* --- Main Content --- */
+.main-content {
+    flex-grow: 1;
+    background-color: #F6F9F6;
+    border-top-left-radius: 40px;
+    border-bottom-left-radius: 40px;
+    padding: 30px 60px;
+    position: relative;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Top Header Area */
+.header-top {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 10px;
+}
+
+.back-icon {
+    color: #9CACFF;
+    font-size: 24px;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.back-icon:hover {
+    transform: scale(1.1);
+}
+
+.welcome-section {
+    margin-bottom: 30px;
+}
+
+.welcome-section h1 {
+    font-size: 28px;
+    font-weight: 800;
+    margin-bottom: 5px;
+}
+
+.welcome-section p {
+    font-size: 13px;
+    color: #555;
+}
+
+/* --- History Card Container --- */
+.history-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    z-index: 2;
+    padding-bottom: 40px;
+}
+
+.history-card {
+    background-color: #E6E6E6;
+    /* Light gray card background */
+    padding: 30px 40px;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 800px;
+    /* Wider than calculator for table */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    min-height: 400px;
+    display: flex;
+    flex-direction: column;
+}
+
+.card-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 600;
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 30px;
+}
+
+.card-title i {
+    color: #f28b82;
+    /* Reddish/Orange icon color from image */
+    font-size: 20px;
+}
+
+/* --- Table Styling --- */
+.history-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: auto;
+    /* Pushes summary to bottom */
+}
+
+.history-table th {
+    text-align: left;
+    font-size: 13px;
+    color: #444;
+    padding-bottom: 20px;
+    font-weight: 600;
+}
+
+.history-table td {
+    padding: 15px 0;
+    font-size: 14px;
+    color: #222;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+/* Action Buttons */
+.action-cell {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-circle {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    color: white;
+    transition: opacity 0.2s;
+}
+
+.btn-circle:hover {
+    opacity: 0.8;
+}
+
+.btn-view {
+    background-color: #007bff;
+    /* Blue */
+}
+
+.btn-delete {
+    background-color: #007bff;
+    /* Blue - same as image */
+}
+
+/* --- Summary Footer --- */
+.summary-footer {
+    margin-top: 40px;
+    display: flex;
+    justify-content: space-between;
+    border-top: 2px solid rgba(0, 0, 0, 0.05);
+    padding-top: 20px;
+}
+
+.stat-box {
+    text-align: center;
+}
+
+.stat-value {
+    font-size: 18px;
+    font-weight: 800;
+    color: #000;
+    margin-bottom: 5px;
+}
+
+.stat-label {
+    font-size: 12px;
+    color: #444;
+}
+
+/* --- Footer Terms --- */
+.footer-terms {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    font-size: 10px;
+    color: #666;
+    width: 100%;
+}
+
+/* --- Responsive --- */
+@media (max-width: 768px) {
+    body {
+        flex-direction: column;
+        overflow: auto;
+    }
+
+    .sidebar {
+        width: 100%;
+        padding: 15px;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .brand-box {
+        margin-bottom: 0;
+        padding: 10px;
+    }
+
+    .nav-links {
+        display: flex;
+        gap: 15px;
+        margin-bottom: 0;
+    }
+
+    .nav-links li {
+        margin-bottom: 0;
+    }
+
+    .main-content {
+        border-radius: 30px 30px 0 0;
+        padding: 30px 20px;
+    }
+
+    .history-table th:nth-child(2),
+    .history-table td:nth-child(2),
+    .history-table th:nth-child(3),
+    .history-table td:nth-child(3) {
+        display: none;
+        /* Hide kWh and Rate on very small screens */
+    }
+}
+
+/* CSS Stylesheet for Dashboard Page */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    background-color: #ffffff;
+    overflow: hidden;
+}
+
+/* --- Sidebar --- */
+.sidebar {
+    width: 250px;
+    background-color: #FFFBFB;
+    display: flex;
+    flex-direction: column;
+    padding: 30px 20px;
+    flex-shrink: 0;
+}
+
+.brand-box {
+    background-color: #F0F7F4;
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+    font-weight: 700;
+    font-size: 14px;
+    color: #000;
+    margin-bottom: 40px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.nav-links {
+    list-style: none;
+}
+
+.nav-links li {
+    margin-bottom: 25px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #000;
+    font-weight: 600;
+    font-size: 14px;
+    display: block;
+    transition: color 0.2s;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+    color: #5296ff;
+}
+
+/* --- Main Content --- */
+.main-content {
+    flex-grow: 1;
+    background-color: #F6F9F6;
+    border-top-left-radius: 40px;
+    border-bottom-left-radius: 40px;
+    padding: 30px 60px;
+    position: relative;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Header */
+.header-top {
+    margin-bottom: 20px;
+}
+
+.breadcrumb {
+    font-size: 14px;
+    font-weight: 700;
+    color: #333;
+}
+
+.user-greeting-small {
+    font-size: 12px;
+    color: #666;
+    margin-top: 4px;
+}
+
+.welcome-section {
+    margin-bottom: 30px;
+}
+
+.welcome-section h1 {
+    font-size: 28px;
+    font-weight: 800;
+    margin-bottom: 5px;
+}
+
+.welcome-section p {
+    font-size: 13px;
+    color: #555;
+}
+
+/* --- Stats Row (Pill Cards) --- */
+.stats-row {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+}
+
+.stat-card {
+    background-color: #ffffff;
+    border-radius: 50px;
+    /* Pill shape */
+    padding: 15px 30px;
+    flex: 1;
+    min-width: 150px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.stat-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.stat-value {
+    font-size: 16px;
+    font-weight: 800;
+    color: #000;
+}
+
+/* --- Quick Actions Row --- */
+.actions-row {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+}
+
+.action-card {
+    background-color: #ffffff;
+    border-radius: 15px;
+    padding: 20px;
+    flex: 1;
+    min-width: 200px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.action-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+}
+
+.action-title {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.action-desc {
+    font-size: 11px;
+    color: #666;
+}
+
+/* --- Recent Results Section --- */
+.recent-section h3 {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: #222;
+}
+
+.recent-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding-bottom: 40px;
+    /* Space for footer */
+}
+
+.recent-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px;
+}
+
+.recent-info {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.recent-month {
+    font-weight: 700;
+    font-size: 14px;
+    color: #222;
+}
+
+.recent-details {
+    font-size: 13px;
+    font-weight: 600;
+    color: #333;
+}
+
+.recent-price {
+    font-weight: 800;
+    font-size: 14px;
+    color: #000;
+}
+
+/* --- Footer --- */
+.footer-terms {
+    margin-top: auto;
+    text-align: center;
+    font-size: 10px;
+    color: #666;
+    padding-top: 20px;
+}
+
+/* --- Responsive --- */
+@media (max-width: 768px) {
+    body {
+        flex-direction: column;
+        overflow: auto;
+    }
+
+    .sidebar {
+        width: 100%;
+        padding: 15px;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .brand-box {
+        margin-bottom: 0;
+        padding: 10px;
+    }
+
+    .nav-links {
+        display: flex;
+        gap: 15px;
+        margin-bottom: 0;
+    }
+
+    .nav-links li {
+        margin-bottom: 0;
+    }
+
+    .main-content {
+        border-radius: 30px 30px 0 0;
+        padding: 30px 20px;
+    }
+
+    .stats-row,
+    .actions-row {
+        flex-direction: column;
+    }
+}
